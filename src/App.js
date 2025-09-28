@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { DollarSign, Home, GraduationCap, Heart, Shield, TrendingUp, AlertTriangle } from 'lucide-react';
+import { DollarSign, Home, GraduationCap, Heart, Shield, TrendingUp, AlertTriangle, Twitter, Share2, Copy, MessageCircle } from 'lucide-react';
 
 const FeudalismApp = () => {
   const [selectedState, setSelectedState] = useState('');
@@ -52,11 +52,11 @@ const FeudalismApp = () => {
     setFeudalismIndex(Math.min(index, 100));
 
     const incomeRatio = income / data.medianIncome;
-    if (incomeRatio > 10) setMedievalRole("Lord of the Manor");
-    else if (incomeRatio > 3) setMedievalRole("Noble/Knight");
-    else if (incomeRatio > 1.5) setMedievalRole("Merchant/Artisan");
-    else if (incomeRatio > 0.8) setMedievalRole("Freeman/Yeoman");
-    else setMedievalRole("Peasant/Serf");
+    if (incomeRatio > 10) setMedievalRole("MEGA LORD (Still a wagecuck tho)");
+    else if (incomeRatio > 3) setMedievalRole("Petty Noble (Middle Manager Energy)");
+    else if (incomeRatio > 1.5) setMedievalRole("Merchant (Hustle Culture Victim)");
+    else if (incomeRatio > 0.8) setMedievalRole("Freeman (Barely Surviving)");
+    else setMedievalRole("ACTUAL FUCKING SERF");
 
     setShowResults(true);
   };
@@ -69,10 +69,40 @@ const FeudalismApp = () => {
   };
 
   const getIndexDescription = (index) => {
-    if (index < 30) return "Relatively Equal Society";
-    if (index < 50) return "Moderate Inequality";
-    if (index < 70) return "High Inequality - Feudal Tendencies";
-    return "Extreme Inequality - Neo-Feudalism";
+    if (index < 30) return "Still have a chance. Don't fuck it up.";
+    if (index < 50) return "Getting bent over slowly. Lube optional.";
+    if (index < 70) return "PROPER FUCKED - Welcome to serfdom";
+    return "MAXIMUM RETARDATION - You're livestock now";
+  };
+
+  const shareToTwitter = () => {
+    const text = `My Feudalism Index is ${feudalismIndex}%\nI'm a ${medievalRole.toUpperCase()}\n${getIndexDescription(feudalismIndex)}\n\nCheck if you're a fucking serf:`;
+    const url = 'http://localhost:3000';
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  };
+
+  const shareToReddit = () => {
+    const title = `I'm ${feudalismIndex}% feudalized - Turns out I'm a ${medievalRole}`;
+    const url = 'http://localhost:3000';
+    window.open(`https://reddit.com/submit?title=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+  };
+
+  const copyToClipboard = () => {
+    const text = `FEUDALISM INDEX: ${feudalismIndex}%\nMY ROLE: ${medievalRole.toUpperCase()}\nSTATUS: ${getIndexDescription(feudalismIndex)}\n\nCheck yours: http://localhost:3000`;
+    navigator.clipboard.writeText(text);
+    alert('Copied to clipboard! Now go spread the truth.');
+  };
+
+  const shareGeneric = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'FEUDALISM INDEX',
+        text: `I'm ${feudalismIndex}% feudalized. I'm literally a ${medievalRole}. ${getIndexDescription(feudalismIndex)}`,
+        url: 'http://localhost:3000'
+      });
+    } else {
+      copyToClipboard();
+    }
   };
 
   return (
@@ -80,9 +110,9 @@ const FeudalismApp = () => {
       <div className="bg-black/30 backdrop-blur-sm border-b border-purple-500/30">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-            Modern Feudalism Index
+            FEUDALISM INDEX: ARE YOU A FUCKING SERF?
           </h1>
-          <p className="text-purple-200 mt-2">How feudal is your area? Discover where you'd stand in medieval times vs. today.</p>
+          <p className="text-purple-200 mt-2">Stop overthinking. Check if you're getting cucked by neo-lords. Throw shit at the wall.</p>
         </div>
       </div>
 
@@ -90,18 +120,18 @@ const FeudalismApp = () => {
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 border border-purple-500/30">
           <h2 className="text-2xl font-bold mb-6 flex items-center">
             <Shield className="mr-3 text-purple-400" />
-            Calculate Your Feudalism Index
+            CALCULATE YOUR SERFDOM LEVEL
           </h2>
           
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium mb-2">Select Your State</label>
+              <label className="block text-sm font-medium mb-2">WHERE YOU GETTING FUCKED?</label>
               <select 
                 value={selectedState} 
                 onChange={(e) => setSelectedState(e.target.value)}
                 className="w-full p-3 bg-black/30 border border-purple-500/50 rounded-lg text-white focus:ring-2 focus:ring-purple-400"
               >
-                <option value="">Choose a state...</option>
+                <option value="">Pick your plantation...</option>
                 {Object.keys(stateData).map(state => (
                   <option key={state} value={state}>{state}</option>
                 ))}
@@ -109,7 +139,7 @@ const FeudalismApp = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Your Annual Income</label>
+              <label className="block text-sm font-medium mb-2">HOW MUCH YOU MAKING (BEFORE THEY ROB YOU)</label>
               <input
                 type="number"
                 value={income}
@@ -124,22 +154,63 @@ const FeudalismApp = () => {
             <div className="mt-8 p-6 bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-lg border border-purple-400/30">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold mb-2">Feudalism Index</h3>
+                  <h3 className="text-lg font-semibold mb-2">RETARDATION LEVEL</h3>
                   <div className={`text-6xl font-bold ${getIndexColor(feudalismIndex)}`}>
-                    {feudalismIndex}
+                    {feudalismIndex}%
                   </div>
                   <p className="text-sm text-purple-200 mt-2">{getIndexDescription(feudalismIndex)}</p>
                 </div>
                 
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold mb-2">Your Medieval Role</h3>
+                  <h3 className="text-lg font-semibold mb-2">YOU ARE A:</h3>
                   <div className="text-2xl font-bold text-yellow-400 mb-2">
-                    {medievalRole}
+                    {medievalRole.toUpperCase()}
                   </div>
                   <p className="text-sm text-purple-200">
-                    Based on your income relative to your state's median
+                    NGMI? Probably. Fuck it, we ball.
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-6 border-t border-green-500/30 pt-6">
+                <h3 className="text-center text-sm font-bold mb-3 text-green-400">SPREAD THE TRUTH</h3>
+                <div className="flex justify-center gap-3">
+                  <button
+                    onClick={shareToTwitter}
+                    className="px-4 py-2 bg-black border-2 border-green-500 text-green-400 font-bold hover:bg-green-500 hover:text-black flex items-center gap-2"
+                    title="Share on Twitter"
+                  >
+                    <Twitter size={20} />
+                    TWEET IT
+                  </button>
+                  <button
+                    onClick={shareToReddit}
+                    className="px-4 py-2 bg-black border-2 border-orange-500 text-orange-400 font-bold hover:bg-orange-500 hover:text-black flex items-center gap-2"
+                    title="Share on Reddit"
+                  >
+                    <MessageCircle size={20} />
+                    REDDIT
+                  </button>
+                  <button
+                    onClick={copyToClipboard}
+                    className="px-4 py-2 bg-black border-2 border-yellow-500 text-yellow-400 font-bold hover:bg-yellow-500 hover:text-black flex items-center gap-2"
+                    title="Copy to Clipboard"
+                  >
+                    <Copy size={20} />
+                    COPY
+                  </button>
+                  <button
+                    onClick={shareGeneric}
+                    className="px-4 py-2 bg-black border-2 border-purple-500 text-purple-400 font-bold hover:bg-purple-500 hover:text-black flex items-center gap-2"
+                    title="Share"
+                  >
+                    <Share2 size={20} />
+                    SHARE
+                  </button>
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-3">
+                  Rage bait or truth bomb? Who gives a fuck. Share it.
+                </p>
               </div>
             </div>
           )}
@@ -148,7 +219,7 @@ const FeudalismApp = () => {
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 border border-purple-500/30">
           <h2 className="text-2xl font-bold mb-6 flex items-center">
             <TrendingUp className="mr-3 text-purple-400" />
-            The Return to Feudalism: Inequality Over Time
+            HOW WE GOT CUCKED: A TIMELINE
           </h2>
           
           <ResponsiveContainer width="100%" height={300}>
@@ -178,10 +249,10 @@ const FeudalismApp = () => {
           <div className="mt-4 p-4 bg-red-900/30 border border-red-500/50 rounded-lg">
             <div className="flex items-center">
               <AlertTriangle className="text-red-400 mr-2" />
-              <span className="font-semibold">Danger Zone:</span>
+              <span className="font-semibold">FUCK ZONE ALERT:</span>
             </div>
             <p className="text-sm mt-1">
-              Gini coefficients above 0.45 historically correlate with social instability. The US crossed this threshold in the 1990s.
+              Above 0.45? Society's about to shit itself. We passed that 30 years ago. YOLO.
             </p>
           </div>
         </div>
@@ -189,7 +260,7 @@ const FeudalismApp = () => {
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 border border-purple-500/30">
           <h2 className="text-2xl font-bold mb-6 flex items-center">
             <Shield className="mr-3 text-purple-400" />
-            Then vs. Now: Social Structure Comparison
+            SAME SHIT, DIFFERENT CENTURY
           </h2>
           
           <ResponsiveContainer width="100%" height={300}>
@@ -212,10 +283,10 @@ const FeudalismApp = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[
-            { icon: DollarSign, title: "Wealth Gap", value: "40%", subtitle: "Top 1% owns 40% of wealth" },
-            { icon: Home, title: "Housing Crisis", value: "30%+", subtitle: "Income spent on housing" },
-            { icon: GraduationCap, title: "Social Mobility", value: "36%", subtitle: "Chance to reach middle class" },
-            { icon: Heart, title: "Healthcare Access", value: "Limited", subtitle: "By wealth/employment" }
+            { icon: DollarSign, title: "WEALTH RAPE", value: "40%", subtitle: "1% owns everything. GG." },
+            { icon: Home, title: "RENT SLAVERY", value: "50%+", subtitle: "Half your shit gone to landlords" },
+            { icon: GraduationCap, title: "MOBILITY", value: "LMAO", subtitle: "Born poor? Die poor." },
+            { icon: Heart, title: "HEALTHCARE", value: "FUCKED", subtitle: "Got money? Live. Don't? RIP." }
           ].map((item, index) => (
             <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-purple-500/30">
               <item.icon className="text-purple-400 mb-3" size={32} />
@@ -227,9 +298,12 @@ const FeudalismApp = () => {
         </div>
 
         <div className="bg-gradient-to-r from-purple-900 to-pink-900 rounded-xl p-8 text-center border border-purple-400/30">
-          <h2 className="text-3xl font-bold mb-4">Break the Cycle</h2>
+          <h2 className="text-3xl font-bold mb-4">STOP THINKING. START DOING.</h2>
           <p className="text-xl mb-6 text-purple-100">
-            Understanding these patterns is the first step toward meaningful change.
+            Fuck the system. Fuck the rules. Fuck your fear. DO A 360 AND MOONWALK AWAY.
+          </p>
+          <p className="text-sm text-purple-200 mt-4">
+            Analysis paralysis is for pussies. Throw shit at the wall. See what sticks.
           </p>
         </div>
       </div>
